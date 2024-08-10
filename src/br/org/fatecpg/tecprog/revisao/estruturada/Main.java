@@ -17,7 +17,9 @@ public class Main {
 				+ "			2 - Diferentes? Qual o maior?\n"
 				+ "			3 - Qual área calcular?\n"
 				+ "			4 - Tabuada\n"
-				+ "			5 - Par ou Impar\n");
+				+ "			5 - Par ou Impar\n"
+				+ "			6 - Calcular Fatorial\n"
+				+ "			7 - Classificação faixa etária\n");
 		
 		while(true) {
 			
@@ -65,9 +67,35 @@ public class Main {
 						System.out.println("A Aŕea desse circulo é de: "+area+"^^2");
 						break;
 					default:
-						System.out.println("Opção inválida, tente novamente.1");
+						System.out.println("Opção inválida, tente novamente.");
 						break;
 				}
+			break;
+			case 4:
+				System.out.print("\nTabuada\nInforme o valor: ");
+				numero = entrada.nextInt();
+				mostrarTabuada(numero);
+			break;
+			case 5:
+				System.out.print("\nInforme o valor: ");
+				numero = entrada.nextInt();
+				if(numero % 2 == 0) {
+					System.out.println("Este valor é par");
+				}else {
+					System.out.println("Este valor é impar");
+				}
+			break;
+			case 6:
+				System.out.print("\nInforme o valor: ");
+				numero = entrada.nextInt();
+				calcularFatorial(numero);
+			break;
+			case 7:
+				System.out.print("\nInforme sua idade: ");
+				numero = entrada.nextInt();
+				definirFaixaEtaria(numero);
+			break;
+				
 		}
 	}
 	// 1
@@ -83,10 +111,44 @@ public class Main {
 		if(numero == numero2) {
 			return numero+" é igual ao valor "+numero2;
 		}else {
+			System.out.println("Os valores são diferentes");	
 			if(numero > numero2) {
 				return "O primeiro valor " + numero + " é maior do que o segundo valor " + numero2;
 			}else {
 				return "O segundo valor " + numero2 + " é maior do que o primeiro valor " + numero;
+			}
+		}
+	}
+	// 4 
+	protected static void mostrarTabuada(int numero) {
+		for(int i = 0; i<=10; i++) {
+			System.out.println(numero + " x " + i + " = " + (numero*i));
+		}
+	}
+	// 6
+	protected static void calcularFatorial(int numero) {
+		long resultado = 1;
+        for (int i = numero; i > 1; i--) {
+            resultado *= i;
+            System.out.print(i+" x ");
+        }
+        System.out.println("1 = "+resultado);
+	}
+	// 7 
+	protected static void definirFaixaEtaria(int numero) {
+		if(numero < 18) {
+			if(numero < 18) {
+				System.out.println("Parabéns por ter a proeza de ter a idade negativa");
+			}else {
+				System.out.println("Você é menor de idade"); 
+			}
+		}else if(numero >= 18 && numero < 60) {
+			System.out.println("Você é um adulto");
+		}else if(numero > 60) {
+			if(numero > 120) {
+				System.out.println("Ou você ta mentindo, ou é um vampiro");
+			}else {
+				System.out.println("Você é um idoso");
 			}
 		}
 	}
