@@ -1,6 +1,8 @@
 package br.org.fatecpg.tecprog.revisao.estruturada;
 
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -19,7 +21,10 @@ public class Main {
 				+ "			4 - Tabuada\n"
 				+ "			5 - Par ou Impar\n"
 				+ "			6 - Calcular Fatorial\n"
-				+ "			7 - Classificação faixa etária\n");
+				+ "			7 - Classificação faixa etária\n"
+				+ "			8 - Soma dos Ímpares\n"
+				+ "			9 - Lista de Nomes\n"
+				+ "			10 - Verificação de senha\n");
 		
 		while(true) {
 			
@@ -95,6 +100,15 @@ public class Main {
 				numero = entrada.nextInt();
 				definirFaixaEtaria(numero);
 			break;
+			case 8:
+				System.out.print("Digite um valor positivo inteiro: ");
+				numero = entrada.nextInt();
+				System.out.println(somarImpares(numero));
+			break;
+			case 9:
+				System.out.println("Informe 5 nomes\n");
+				buscarNome(inserirNomesLista(entrada), entrada);
+			break;
 				
 		}
 	}
@@ -128,11 +142,15 @@ public class Main {
 	// 6
 	protected static void calcularFatorial(int numero) {
 		long resultado = 1;
-        for (int i = numero; i > 1; i--) {
+        for (int i = numero; i >= 1; i--) {
             resultado *= i;
-            System.out.print(i+" x ");
+            if(i == 1) {
+            	System.out.print(i);
+            }else {
+            	System.out.print(i+" x ");
+            }
         }
-        System.out.println("1 = "+resultado);
+        System.out.println(" = "+resultado);
 	}
 	// 7 
 	protected static void definirFaixaEtaria(int numero) {
@@ -150,6 +168,59 @@ public class Main {
 			}else {
 				System.out.println("Você é um idoso");
 			}
+		}
+	}
+	// 8
+	protected static int somarImpares(int numero) {
+		Integer somaImpares = 0, contador = 0;
+		while(true) {
+			if(contador % 2 != 0) {
+				somaImpares += contador;
+				numero--;
+				if(numero == 0) {
+					System.out.print(contador+" = ");
+					break;
+				}else {
+					System.out.print(contador+" + ");
+				}
+			}
+			contador++;
+		}
+		
+		return somaImpares;
+	}
+	// 9
+	protected static List<String> inserirNomesLista(Scanner entrada) {
+		String nome;
+		List<String> nomes = new ArrayList<>();
+		
+		entrada.nextLine();
+		
+		for(int i = 1; i <= 5; i++) {
+			System.out.print(i+"° nome: ");
+			nome = entrada.nextLine();
+			nomes.add(nome);
+		}
+		
+		return nomes;
+	}
+	
+	protected static void buscarNome(List<String> nomes, Scanner entrada) {
+		String nomePesquisado;
+		boolean encontrado = false;
+		System.out.print("DIgite nome inserido: ");
+		
+		nomePesquisado = entrada.nextLine();
+		
+		for (String nome : nomes) {
+			if(nomePesquisado.equals(nome)) {
+				System.out.println("Nome encontrando, foi o " + (nomes.indexOf(nomePesquisado) + 1) + "° digitado.");
+				encontrado = true;
+			}
+		}
+		
+		if(!encontrado) {
+			System.out.println("Nome não encontrado.");
 		}
 	}
 }
