@@ -2,6 +2,8 @@ package br.org.fatecpg.tecprog.revisao.estruturada;
 
 import java.util.Scanner;
 import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class Main {
@@ -12,6 +14,7 @@ public class Main {
 		int escolhaCalculo = 0;
 		double lado = 0d, area = 0d;
 		double PI = Math.PI;
+		BigDecimal areaArredondada = BigDecimal.ZERO;
 		
 		System.out.println("Qual exercício deseja ver?\n"
 				+ "			0 - Sair\n"
@@ -31,16 +34,18 @@ public class Main {
 			System.out.print("\nEscolha: ");
 			escolhaExercicio = entrada.nextInt();
 			
-			rodarAplicacao(escolhaExercicio, entrada, numero, numero2, escolhaCalculo, PI, lado, area);
+			rodarAplicacao(escolhaExercicio, entrada, numero, numero2, escolhaCalculo, PI, lado, area, areaArredondada);
 			if(escolhaExercicio == 0) {
 				Thread.sleep(1000);
 				System.out.println("\nAté mais :).");
 				break;
+			}else if(escolhaExercicio < 0 || escolhaExercicio > 10) {
+				System.out.println("Opção inválida, tente novamente.");
 			}
 		}
 	}
 	// Rodar Menu
-	protected static void rodarAplicacao(int escolhaExercicio, Scanner entrada, int numero, int numero2, int escolhaCalculo, double PI, double lado, double area) {
+	protected static void rodarAplicacao(int escolhaExercicio, Scanner entrada, int numero, int numero2, int escolhaCalculo, double PI, double lado, double area, BigDecimal areaArredondada) {
 		switch(escolhaExercicio){
 			case 1:
 				System.out.print("Informe um valor: ");
@@ -63,13 +68,17 @@ public class Main {
 						System.out.println("Cálculo da área do quadrado\nInforme o lado: ");
 						lado = entrada.nextDouble();
 						area = lado * lado;
-						System.out.println("A Aŕea desse quadrado é de: "+area+"^^2");
+						areaArredondada = new BigDecimal(Double.toString(area));
+						areaArredondada = areaArredondada.setScale(3, RoundingMode.HALF_UP);
+						System.out.println("A Aŕea desse quadrado é de: "+areaArredondada+"^^2");
 						break;
 					case 2:
 						System.out.println("Cálculo da área do Circulo\nInforme o raio: ");
 						lado = entrada.nextDouble();
-						area = 3.14 * (lado * lado);
-						System.out.println("A Aŕea desse circulo é de: "+area+"^^2");
+						area = PI * (lado * lado);
+						areaArredondada = new BigDecimal(Double.toString(area));
+						areaArredondada = areaArredondada.setScale(3, RoundingMode.HALF_UP);
+						System.out.println("A Aŕea desse circulo é de: "+areaArredondada+"^^2");
 						break;
 					default:
 						System.out.println("Opção inválida, tente novamente.");
@@ -109,7 +118,12 @@ public class Main {
 				System.out.println("Informe 5 nomes\n");
 				buscarNome(inserirNomesLista(entrada), entrada);
 			break;
-				
+			case 10:
+				entrada.nextLine();
+				System.out.print("Digite a senha: ");
+				String senhaDigitada = entrada.nextLine();
+				verificarSenha(entrada, senhaDigitada);
+			break;
 		}
 	}
 	// 1
@@ -155,7 +169,7 @@ public class Main {
 	// 7 
 	protected static void definirFaixaEtaria(int numero) {
 		if(numero < 18) {
-			if(numero < 18) {
+			if(numero < 0) {
 				System.out.println("Parabéns por ter a proeza de ter a idade negativa");
 			}else {
 				System.out.println("Você é menor de idade"); 
@@ -204,7 +218,7 @@ public class Main {
 		
 		return nomes;
 	}
-	
+	// 9b
 	protected static void buscarNome(List<String> nomes, Scanner entrada) {
 		String nomePesquisado;
 		boolean encontrado = false;
@@ -221,6 +235,19 @@ public class Main {
 		
 		if(!encontrado) {
 			System.out.println("Nome não encontrado.");
+		}
+	}
+	//10
+	protected static void verificarSenha(Scanner entrada, String senhaDigitada) {
+		String senha = "Java123";
+		while(true) {
+			if(senhaDigitada.equals(senha)) {
+				System.out.println("Senha correta, bem-vindo.");
+				break;
+			}else {
+				System.out.print("Senha incorreta, tente novamente: ");
+				senhaDigitada = entrada.nextLine();
+			}
 		}
 	}
 }
